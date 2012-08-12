@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="10" height="10" tilewidth="175" tileheight="175">
+ <tileset firstgid="1" name="SokoChuy" tilewidth="175" tileheight="175">
+  <image source="gfx/sokochuy.png" width="350" height="525"/>
+  <tile id="4">
+   <properties>
+    <property name="wall" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Ground" width="10" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA2NkYGBgJBKzEsDI6phw4KGmjhj/UhMDAPLGGe+QAQAA
+  </data>
+ </layer>
+ <objectgroup name="Objects" width="10" height="10">
+  <object name="Chuy" x="739" y="589" width="175" height="175"/>
+  <object name="Box" x="570" y="835" width="175" height="175"/>
+  <object name="Box" x="929" y="830" width="175" height="175"/>
+  <object name="Point" x="506" y="1074" width="35" height="38"/>
+  <object name="Point" x="1155" y="1057" width="35" height="38"/>
+ </objectgroup>
+</map>
