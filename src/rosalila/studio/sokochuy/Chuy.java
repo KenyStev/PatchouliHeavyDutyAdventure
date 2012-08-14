@@ -17,7 +17,11 @@ public class Chuy extends AnimatedSprite {
 	
 	public Chuy(float pX, float pY, ITiledTextureRegion pTiledTextureRegion,PhysicsWorld mPhysicsWorld) {
 		super(pX, pY, pTiledTextureRegion, Global.vertex_buffer_object_manager);
-
+		
+        //Smaller chuys
+        this.setHeight(this.getHeight()*(float)0.7);
+        this.setWidth(this.getWidth()*(float)0.7);
+		
 		final FixtureDef playerFixtureDef = PhysicsFactory.createFixtureDef(0, 0, 0.5f);
 		this.body = PhysicsFactory.createBoxBody(mPhysicsWorld, this, BodyType.DynamicBody, playerFixtureDef);
         mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(this, body, true, false){
@@ -41,6 +45,7 @@ public class Chuy extends AnimatedSprite {
                 		}
                 }
         });
+        
 		velocity=(float) 10;
 		this.destination_x=-1;
 		this.destination_y=-1;

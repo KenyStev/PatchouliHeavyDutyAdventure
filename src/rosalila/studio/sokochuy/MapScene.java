@@ -30,12 +30,13 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 public class MapScene extends Scene{
+	
 	Chuy chuy;
 	ArrayList<Box> boxes;
 	ArrayList<Point> points;
 	
-	private TMXTiledMap mTMXTiledMap;
-	TMXLayer tmxLayer; 
+	public TMXTiledMap mTMXTiledMap;
+	public TMXLayer tmxLayer; 
 	
 	private TiledTextureRegion mChuyTextureRegion;
 	private BitmapTextureAtlas mChuyTextureAtlas;
@@ -48,7 +49,7 @@ public class MapScene extends Scene{
 	
 	private PhysicsWorld mPhysicsWorld;
 	
-	public MapScene()
+	public MapScene(String tmx_path)
 	{
 		super();
 		setOnAreaTouchTraversalFrontToBack();
@@ -56,9 +57,11 @@ public class MapScene extends Scene{
 		
 		loadResouces();
 
-		loadMap();
+		loadMap(tmx_path);
 		
 		registerUpdateHandler();
+		
+		setupCamera();
 	}
 	
 	public void loadResouces()
@@ -78,7 +81,7 @@ public class MapScene extends Scene{
 		this.mPointTextureAtlas.load();
 	}
 	
-	public void loadMap()
+	public void loadMap(String tmx_path)
 	{
 		this.mPhysicsWorld = new FixedStepPhysicsWorld(30, new Vector2(0, 0), false, 8, 1);
 		registerUpdateHandler(this.mPhysicsWorld);
@@ -100,7 +103,7 @@ public class MapScene extends Scene{
 					}
 				}
 			});
-			this.mTMXTiledMap = tmxLoader.loadFromAsset("tmx/desert.tmx");
+			this.mTMXTiledMap = tmxLoader.loadFromAsset(tmx_path);
 
 		} catch (final TMXLoadException e) {
 			Debug.e(e);
@@ -147,6 +150,33 @@ public class MapScene extends Scene{
 					System.exit(0);
 			}
 		});
+	}
+	
+	public void setupCamera()
+	{
+		//Set zoom
+		float div_x = (float)Global.SCREEN_WIDTH/(float)tmxLayer.getWidth();
+		float div_y = (float)Global.SCREEN_HEIGHT/(float)tmxLayer.getHeight();
+		float div_res;
+		if(div_x<div_y)
+			div_res=div_x;
+		else
+			div_res=div_y;
+		
+		if(div_res<Global.MIN_ZOOM_BOUND)
+			div_res=Global.MIN_ZOOM_BOUND;
+		
+		if(div_res>Global.MAX_ZOOM_BOUND)
+			div_res=Global.MAX_ZOOM_BOUND;
+		
+		Global.mZoomCamera.setZoomFactor((float)div_res);
+		
+		//Center camera
+		Global.mZoomCamera.setCenter(tmxLayer.getWidth()/2, tmxLayer.getHeight()/2);
+		
+		//Set bounds
+		Global.mZoomCamera.setBounds(0, 0, tmxLayer.getHeight(), tmxLayer.getWidth());
+		Global.mZoomCamera.setBoundsEnabled(true);
 	}
 
 	public void onTouch(TouchEvent pSceneTouchEvent)

@@ -17,6 +17,10 @@ public class Box extends Sprite {
 	public Box(float pX, float pY,
 			ITextureRegion pTextureRegion,PhysicsWorld mPhysicsWorld) {
 		super(pX, pY, pTextureRegion, Global.vertex_buffer_object_manager);
+		
+        //Smaller boxes
+        this.setHeight(this.getHeight()*(float)0.7);
+        this.setWidth(this.getWidth()*(float)0.7);
 
 		final FixtureDef playerFixtureDef = PhysicsFactory.createFixtureDef(0, 0, 0.5f);
 		this.body = PhysicsFactory.createBoxBody(mPhysicsWorld, this, BodyType.DynamicBody, playerFixtureDef);
