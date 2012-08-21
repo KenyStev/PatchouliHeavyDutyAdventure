@@ -9,6 +9,9 @@
   </tile>
  </tileset>
  <layer name="Ground" width="10" height="10">
+   <properties>
+   <property name="text" value="Nyuuuu"/>
+  </properties>
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAA2NkYGBgJBKz4MHo6lixYELqWJBoFizqsJmLTR0uM3H5A58b8fmd2HAjBQMAOarF7JABAAA=
   </data>
