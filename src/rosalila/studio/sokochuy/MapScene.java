@@ -2,12 +2,14 @@ package rosalila.studio.sokochuy;
 
 import java.util.ArrayList;
 
+import static org.andengine.extension.physics.box2d.util.constants.PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
 import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.IOnAreaTouchListener;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.ITouchArea;
 import org.andengine.entity.scene.Scene;
+import org.andengine.entity.shape.IAreaShape;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
@@ -112,8 +114,8 @@ public class MapScene extends Scene implements IOnSceneTouchListener,IOnAreaTouc
 	{
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
 		
-		this.mChuyTextureAtlas = new BitmapTextureAtlas(Global.texture_manager, 516, 688, TextureOptions.DEFAULT);
-		this.mChuyTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(this.mChuyTextureAtlas, Global.main_activity, "chuy.png", 0, 0, 3, 4);
+		this.mChuyTextureAtlas = new BitmapTextureAtlas(Global.texture_manager, 258, 344, TextureOptions.DEFAULT);
+		this.mChuyTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(this.mChuyTextureAtlas, Global.main_activity, "patche.png", 0, 0, 3, 4);
 		this.mChuyTextureAtlas.load();
 		
 		this.mBoxTextureAtlas = new BitmapTextureAtlas(Global.texture_manager, 171, 171, TextureOptions.DEFAULT);
@@ -142,10 +144,108 @@ public class MapScene extends Scene implements IOnSceneTouchListener,IOnAreaTouc
 				@Override
 				public void onTMXTileWithPropertiesCreated(final TMXTiledMap pTMXTiledMap, final TMXLayer pTMXLayer, final TMXTile pTMXTile, final TMXProperties<TMXTileProperty> pTMXTileProperties) {
 					/* We are going to count the tiles that have the property "cactus=true" set. */
-					if(pTMXTileProperties.containsTMXProperty("wall", "true")) {
-				        final Rectangle rect = new Rectangle(pTMXTile.getTileX()+1,pTMXTile.getTileY()+1,pTMXTile.getTileWidth()-2,pTMXTile.getTileHeight()-2, Global.vertex_buffer_object_manager);
+					int wall_separation = 30;
+					final Rectangle rect = new Rectangle(pTMXTile.getTileX()+wall_separation/2,pTMXTile.getTileY()+wall_separation/2,
+														pTMXTile.getTileWidth()-wall_separation,pTMXTile.getTileHeight()-wall_separation,
+														Global.vertex_buffer_object_manager);
+					if(pTMXTileProperties.containsTMXProperty("type", "square")) {
 				        final FixtureDef boxFixtureDef = PhysicsFactory.createFixtureDef(0, 0, 1f);
 				        PhysicsFactory.createBoxBody(mPhysicsWorld, rect, BodyType.StaticBody, boxFixtureDef);
+				        rect.setVisible(false);
+				        attachChild(rect);
+					}
+					
+					if(pTMXTileProperties.containsTMXProperty("type", "circle")) {
+				        final FixtureDef boxFixtureDef = PhysicsFactory.createFixtureDef(0, 0, 1f);
+				        PhysicsFactory.createCircleBody(mPhysicsWorld, rect, BodyType.StaticBody, boxFixtureDef);
+				        rect.setVisible(false);
+				        attachChild(rect);
+					}
+					
+					if(pTMXTileProperties.containsTMXProperty("type", "triangle a"))
+					{
+						/* Remember that the vertices are relative to the center-coordinates of the Shape. */
+						final float halfWidth = ((rect.getWidthScaled()-2) * 0.5f) / PIXEL_TO_METER_RATIO_DEFAULT;
+						final float halfHeight = ((rect.getHeightScaled()-2) * 0.5f) / PIXEL_TO_METER_RATIO_DEFAULT;
+	
+						final float top = -halfHeight;
+						final float bottom = halfHeight;
+						final float left = -halfHeight;
+						final float right = halfWidth;
+	
+						final Vector2[] vertices = {
+								new Vector2(right, top),
+								new Vector2(right, bottom),
+								new Vector2(left, bottom)
+						};
+				        final FixtureDef boxFixtureDef = PhysicsFactory.createFixtureDef(0, 0, 1f);
+				        PhysicsFactory.createPolygonBody(mPhysicsWorld, rect,vertices, BodyType.StaticBody, boxFixtureDef);
+				        rect.setVisible(false);
+				        attachChild(rect);
+					}
+					
+					if(pTMXTileProperties.containsTMXProperty("type", "triangle b"))
+					{
+						/* Remember that the vertices are relative to the center-coordinates of the Shape. */
+						final float halfWidth = ((rect.getWidthScaled()-2) * 0.5f) / PIXEL_TO_METER_RATIO_DEFAULT;
+						final float halfHeight = ((rect.getHeightScaled()-2) * 0.5f) / PIXEL_TO_METER_RATIO_DEFAULT;
+	
+						final float top = -halfHeight;
+						final float bottom = halfHeight;
+						final float left = -halfHeight;
+						final float right = halfWidth;
+	
+						final Vector2[] vertices = {
+								new Vector2(left, top),
+								new Vector2(right, bottom),
+								new Vector2(left, bottom)
+						};
+				        final FixtureDef boxFixtureDef = PhysicsFactory.createFixtureDef(0, 0, 1f);
+				        PhysicsFactory.createPolygonBody(mPhysicsWorld, rect,vertices, BodyType.StaticBody, boxFixtureDef);
+				        rect.setVisible(false);
+				        attachChild(rect);
+					}
+					
+					if(pTMXTileProperties.containsTMXProperty("type", "triangle c"))
+					{
+						/* Remember that the vertices are relative to the center-coordinates of the Shape. */
+						final float halfWidth = ((rect.getWidthScaled()-2) * 0.5f) / PIXEL_TO_METER_RATIO_DEFAULT;
+						final float halfHeight = ((rect.getHeightScaled()-2) * 0.5f) / PIXEL_TO_METER_RATIO_DEFAULT;
+	
+						final float top = -halfHeight;
+						final float bottom = halfHeight;
+						final float left = -halfHeight;
+						final float right = halfWidth;
+	
+						final Vector2[] vertices = {
+								new Vector2(right, top),
+								new Vector2(right, bottom),
+								new Vector2(left, top)
+						};
+				        final FixtureDef boxFixtureDef = PhysicsFactory.createFixtureDef(0, 0, 1f);
+				        PhysicsFactory.createPolygonBody(mPhysicsWorld, rect,vertices, BodyType.StaticBody, boxFixtureDef);
+				        rect.setVisible(false);
+				        attachChild(rect);
+					}
+
+					if(pTMXTileProperties.containsTMXProperty("type", "triangle d"))
+					{
+						/* Remember that the vertices are relative to the center-coordinates of the Shape. */
+						final float halfWidth = ((rect.getWidthScaled()-2) * 0.5f) / PIXEL_TO_METER_RATIO_DEFAULT;
+						final float halfHeight = ((rect.getHeightScaled()-2) * 0.5f) / PIXEL_TO_METER_RATIO_DEFAULT;
+	
+						final float top = -halfHeight;
+						final float bottom = halfHeight;
+						final float left = -halfHeight;
+						final float right = halfWidth;
+	
+						final Vector2[] vertices = {
+								new Vector2(right, top),
+								new Vector2(left, bottom),
+								new Vector2(left, top)
+						};
+				        final FixtureDef boxFixtureDef = PhysicsFactory.createFixtureDef(0, 0, 1f);
+				        PhysicsFactory.createPolygonBody(mPhysicsWorld, rect,vertices, BodyType.StaticBody, boxFixtureDef);
 				        rect.setVisible(false);
 				        attachChild(rect);
 					}
@@ -245,29 +345,29 @@ public class MapScene extends Scene implements IOnSceneTouchListener,IOnAreaTouc
 	
 	public void setupCamera()
 	{
-		//Set zoom
-		float div_x = (float)Global.SCREEN_WIDTH/(float)tmxLayer.getWidth();
-		float div_y = (float)Global.SCREEN_HEIGHT/(float)tmxLayer.getHeight();
-		float div_res;
-		if(div_x<div_y)
-			div_res=div_x;
-		else
-			div_res=div_y;
+//		//Set zoom
+//		float div_x = (float)Global.SCREEN_WIDTH/(float)tmxLayer.getWidth();
+//		float div_y = (float)Global.SCREEN_HEIGHT/(float)tmxLayer.getHeight();
+//		float div_res;
+//		if(div_x<div_y)
+//			div_res=div_x;
+//		else
+//			div_res=div_y;
+//		
+//		if(div_res<Global.MIN_ZOOM_BOUND)
+//			div_res=Global.MIN_ZOOM_BOUND;
+//		
+//		if(div_res>Global.MAX_ZOOM_BOUND)
+//			div_res=Global.MAX_ZOOM_BOUND;
 		
-		if(div_res<Global.MIN_ZOOM_BOUND)
-			div_res=Global.MIN_ZOOM_BOUND;
-		
-		if(div_res>Global.MAX_ZOOM_BOUND)
-			div_res=Global.MAX_ZOOM_BOUND;
-		
-		Global.mZoomCamera.setZoomFactor((float)div_res);
+		Global.mZoomCamera.setZoomFactor(1);
 		
 		//Center camera
-		Global.mZoomCamera.setCenter(tmxLayer.getWidth()/2, tmxLayer.getHeight()/2);
+		Global.mZoomCamera.setCenter(chuy.getX(), chuy.getY());
 		
-		//Set bounds
-		Global.mZoomCamera.setBounds(0, 0, tmxLayer.getHeight(), tmxLayer.getWidth());
-		Global.mZoomCamera.setBoundsEnabled(true);
+//		//Set bounds
+//		Global.mZoomCamera.setBounds(0, 0, tmxLayer.getHeight(), tmxLayer.getWidth());
+//		Global.mZoomCamera.setBoundsEnabled(true);
 	}
 
 	public void onTouch(TouchEvent pSceneTouchEvent)
@@ -314,8 +414,8 @@ public class MapScene extends Scene implements IOnSceneTouchListener,IOnAreaTouc
 
 	@Override
 	public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
-		this.mPinchZoomDetector.onTouchEvent(pSceneTouchEvent);
-
+//		this.mPinchZoomDetector.onTouchEvent(pSceneTouchEvent);
+//
 		if(this.mPinchZoomDetector.isZooming()) {
 			this.mScrollDetector.setEnabled(false);
 		} else {
@@ -339,43 +439,43 @@ public class MapScene extends Scene implements IOnSceneTouchListener,IOnAreaTouc
 	
 	@Override
 	public void onScrollStarted(final ScrollDetector pScollDetector, final int pPointerID, final float pDistanceX, final float pDistanceY) {
-		final float zoomFactor = Global.mZoomCamera.getZoomFactor();
-		Global.mZoomCamera.offsetCenter(-pDistanceX / zoomFactor, -pDistanceY / zoomFactor);
+//		final float zoomFactor = Global.mZoomCamera.getZoomFactor();
+//		Global.mZoomCamera.offsetCenter(-pDistanceX / zoomFactor, -pDistanceY / zoomFactor);
 	}
 
 	@Override
 	public void onScroll(final ScrollDetector pScollDetector, final int pPointerID, final float pDistanceX, final float pDistanceY) {
-		final float zoomFactor = Global.mZoomCamera.getZoomFactor();
-		Global.mZoomCamera.offsetCenter(-pDistanceX / zoomFactor, -pDistanceY / zoomFactor);
+//		final float zoomFactor = Global.mZoomCamera.getZoomFactor();
+//		Global.mZoomCamera.offsetCenter(-pDistanceX / zoomFactor, -pDistanceY / zoomFactor);
 	}
 	
 	@Override
 	public void onScrollFinished(final ScrollDetector pScollDetector, final int pPointerID, final float pDistanceX, final float pDistanceY) {
-		final float zoomFactor = Global.mZoomCamera.getZoomFactor();
-		Global.mZoomCamera.offsetCenter(-pDistanceX / zoomFactor, -pDistanceY / zoomFactor);
+//		final float zoomFactor = Global.mZoomCamera.getZoomFactor();
+//		Global.mZoomCamera.offsetCenter(-pDistanceX / zoomFactor, -pDistanceY / zoomFactor);
 	}
 
 	@Override
 	public void onPinchZoomStarted(final PinchZoomDetector pPinchZoomDetector, final TouchEvent pTouchEvent) {
-		this.mPinchZoomStartedCameraZoomFactor = Global.mZoomCamera.getZoomFactor();
+//		this.mPinchZoomStartedCameraZoomFactor = Global.mZoomCamera.getZoomFactor();
 	}
 
 	@Override
 	public void onPinchZoom(final PinchZoomDetector pPinchZoomDetector, final TouchEvent pTouchEvent, final float pZoomFactor) {
-		float final_zoom = this.mPinchZoomStartedCameraZoomFactor * pZoomFactor;
-		if(final_zoom>Global.MIN_ZOOM_BOUND && final_zoom<Global.MAX_ZOOM_BOUND)
-		{
-			Global.mZoomCamera.setZoomFactor(final_zoom);
-		}
+//		float final_zoom = this.mPinchZoomStartedCameraZoomFactor * pZoomFactor;
+//		if(final_zoom>Global.MIN_ZOOM_BOUND && final_zoom<Global.MAX_ZOOM_BOUND)
+//		{
+//			Global.mZoomCamera.setZoomFactor(final_zoom);
+//		}
 	}
 
 	@Override
 	public void onPinchZoomFinished(final PinchZoomDetector pPinchZoomDetector, final TouchEvent pTouchEvent, final float pZoomFactor) {
-		float final_zoom = this.mPinchZoomStartedCameraZoomFactor * pZoomFactor;
-		if(final_zoom>Global.MIN_ZOOM_BOUND && final_zoom<Global.MAX_ZOOM_BOUND)
-		{
-			Global.mZoomCamera.setZoomFactor(final_zoom);
-		}
+//		float final_zoom = this.mPinchZoomStartedCameraZoomFactor * pZoomFactor;
+//		if(final_zoom>Global.MIN_ZOOM_BOUND && final_zoom<Global.MAX_ZOOM_BOUND)
+//		{
+//			Global.mZoomCamera.setZoomFactor(final_zoom);
+//		}
 	}
 
 	@Override

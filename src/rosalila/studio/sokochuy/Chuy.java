@@ -35,22 +35,25 @@ public class Chuy extends AnimatedSprite {
                 			float distance_y=destination_y-getY();
                 			float total_distance=(float)Math.sqrt(Math.pow(distance_x, 2)+(float)Math.pow(distance_y, 2));
                 			
-                			if(Math.abs(distance_x)<5 && Math.abs(distance_y)<5)
+                			if(Math.abs(distance_x)<25 && Math.abs(distance_y)<25)
                 				destination_x=destination_y=-1;
                 			
                 			body.setLinearVelocity(distance_x*velocity/total_distance,distance_y*velocity/total_distance);
+                			Global.mZoomCamera.setCenter(getX(),getY());
                 		}else
                 		{
                 			body.setLinearVelocity(0,0);
+                			stopAnimation();
                 		}
                 }
         });
         
-		velocity=(float) 10;
+		velocity=(float) 12;
 		this.destination_x=-1;
 		this.destination_y=-1;
 		
 		animate("right");
+		this.stopAnimation();
 	}
 	
 	public void move(float destination_x,float destination_y)
