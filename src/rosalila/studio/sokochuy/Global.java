@@ -17,6 +17,7 @@ public class Global {
 	
 	public static int SCREEN_WIDTH = 720;
 	public static int SCREEN_HEIGHT = 480;
+	public static final int AREAS_QUANTITY = 14;
 	
 	public static float MIN_ZOOM_BOUND = (float)0.1;
 	public static float MAX_ZOOM_BOUND = (float)10;

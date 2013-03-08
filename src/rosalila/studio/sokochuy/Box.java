@@ -1,21 +1,21 @@
 package rosalila.studio.sokochuy;
 
-import org.andengine.entity.sprite.Sprite;
+import org.andengine.entity.sprite.TiledSprite;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
-import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.ITiledTextureRegion;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 
-public class Box extends Sprite {
+public class Box extends TiledSprite {
 
 	public Body body;
 	
 	public Box(float pX, float pY,
-			ITextureRegion pTextureRegion,PhysicsWorld mPhysicsWorld) {
+			ITiledTextureRegion pTextureRegion,PhysicsWorld mPhysicsWorld) {
 		super(pX, pY, pTextureRegion, Global.vertex_buffer_object_manager);
 		
         //Smaller boxes
@@ -31,5 +31,15 @@ public class Box extends Sprite {
                         body.setLinearVelocity(0,0);
                 }
         });
+	}
+	
+	public void setReady()
+	{
+		this.setCurrentTileIndex(1);
+	}
+	
+	public void setNotReady()
+	{
+		this.setCurrentTileIndex(0);
 	}
 }

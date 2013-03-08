@@ -1,23 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="10" height="10" tilewidth="175" tileheight="175">
- <tileset firstgid="1" name="SokoChuy" tilewidth="175" tileheight="175" spacing="2" margin="1">
-  <image source="gfx/tile.png" width="350" height="525"/>
+<map version="1.0" orientation="orthogonal" width="10" height="10" tilewidth="90" tileheight="90">
+ <tileset firstgid="1" name="SokoChuy" tilewidth="90" tileheight="90">
+  <image source="gfx/tile.png" width="270" height="270"/>
+  <tile id="0">
+   <properties>
+    <property name="type" value="triangle a"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="type" value="triangle b"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="type" value="circle"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="type" value="triangle c"/>
+   </properties>
+  </tile>
   <tile id="4">
    <properties>
-    <property name="wall" value="true"/>
+    <property name="type" value="triangle d"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="type" value="square"/>
    </properties>
   </tile>
  </tileset>
  <layer name="Ground" width="10" height="10">
+  <properties>
+   <property name="text" value="Area 2"/>
+  </properties>
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA2NkYGBgJBKzEsDI6phw4KGmjhj/UhMDAPLGGe+QAQAA
+   H4sIAAAAAAAAA2NnYGBgJxKzoWFOJIyuDpc+bOpANAcU49LPgaYGWRybvch60NVxYnE/jI+uDiaH7mdkdcRgDiIxAE0o0NSQAQAA
   </data>
  </layer>
  <objectgroup name="Objects" width="10" height="10">
-  <object name="Chuy" x="739" y="589" width="175" height="175"/>
-  <object name="Box" x="570" y="835" width="175" height="175"/>
-  <object name="Box" x="929" y="830" width="175" height="175"/>
-  <object name="Point" x="506" y="1074" width="35" height="38"/>
-  <object name="Point" x="1155" y="1057" width="35" height="38"/>
+  <object name="Box" x="292" y="460" width="50" height="70"/>
+  <object name="Point" x="193" y="271" width="66" height="90"/>
+  <object name="Chuy" x="451" y="363" width="86" height="86"/>
+  <object name="Box" x="464" y="287" width="50" height="70"/>
+  <object name="Point" x="375" y="175" width="66" height="90"/>
+  <object name="Box" x="387" y="288" width="50" height="70"/>
+  <object name="Point" x="192" y="176" width="66" height="90"/>
  </objectgroup>
 </map>

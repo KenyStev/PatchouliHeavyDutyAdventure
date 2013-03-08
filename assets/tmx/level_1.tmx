@@ -35,19 +35,19 @@
  </tileset>
  <layer name="Ground" width="10" height="10">
   <properties>
-   <property name="text" value="Nyuuuu"/>
+   <property name="text" value="Area 1"/>
   </properties>
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA2NnYGBgJxKz4cHo6nDpx8ZnQaPRzURXh8tMbPYy41BHjtvx6SOEOYjEAPp3gsSQAQAA
+   H4sIAAAAAAAAA2NnYGBgJxKz4cHo6nDpx8bHRSOr40DC6OLYzIepZUPiYzOPjYD52OTR1RGDsenHhgFvwTm7kAEAAA==
   </data>
  </layer>
  <objectgroup name="Objects" width="10" height="10">
-  <object name="Box" x="164" y="169" width="122" height="122"/>
-  <object name="Box" x="443" y="510" width="122" height="122"/>
-  <object name="Point" x="589" y="534" width="35" height="37"/>
-  <object name="Point" x="236" y="431" width="35" height="38"/>
-  <object name="Box" x="409" y="358" width="122" height="122"/>
-  <object name="Point" x="672" y="398" width="35" height="38"/>
-  <object name="Chuy" x="549" y="191" width="122" height="122"/>
+  <object name="Box" x="467" y="364" width="50" height="70"/>
+  <object name="Point" x="375" y="179" width="66" height="90"/>
+  <object name="Chuy" x="452" y="182" width="86" height="86"/>
+  <object name="Point" x="375" y="274" width="66" height="90"/>
+  <object name="Box" x="286" y="458" width="50" height="70"/>
+  <object name="Box" x="378" y="458" width="50" height="70"/>
+  <object name="Point" x="192" y="450" width="66" height="90"/>
  </objectgroup>
 </map>

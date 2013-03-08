@@ -1,15 +1,16 @@
 package rosalila.studio.sokochuy;
 
+import static org.andengine.extension.physics.box2d.util.constants.PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
+
 import java.util.ArrayList;
 
-import static org.andengine.extension.physics.box2d.util.constants.PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
 import org.andengine.engine.handler.IUpdateHandler;
+import org.andengine.entity.Entity;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.IOnAreaTouchListener;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.ITouchArea;
 import org.andengine.entity.scene.Scene;
-import org.andengine.entity.shape.IAreaShape;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
@@ -57,14 +58,14 @@ public class MapScene extends Scene implements IOnSceneTouchListener,IOnAreaTouc
 	ArrayList<Point> points;
 	
 	public TMXTiledMap mTMXTiledMap;
-	public TMXLayer tmxLayer; 
+	public TMXLayer tmxLayer;
 	
 	private TiledTextureRegion mChuyTextureRegion;
 	private BitmapTextureAtlas mChuyTextureAtlas;
 	
 	private TiledTextureRegion mBoxTextureRegion;
 	private BitmapTextureAtlas mBoxTextureAtlas;
-	
+		
 	private TiledTextureRegion mPointTextureRegion;
 	private BitmapTextureAtlas mPointTextureAtlas;
 	
@@ -79,12 +80,21 @@ public class MapScene extends Scene implements IOnSceneTouchListener,IOnAreaTouc
 	
 	TextureRegion mCompletedTextureRegion;
 	Sprite level_completed;
+	Sprite destination;
 	
 	String text_intro;
 	
 	public MapScene(int level_id)
 	{
 		super();
+		
+		//0: map tile
+		//1: bookshelves
+		//2: books
+		//3: patche & moon
+		//4: congratulations 
+		for(int i=0;i<5;i++)
+			this.attachChild(new Entity());
 		
 		text_intro="";
 		
@@ -118,17 +128,22 @@ public class MapScene extends Scene implements IOnSceneTouchListener,IOnAreaTouc
 		this.mChuyTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(this.mChuyTextureAtlas, Global.main_activity, "patche.png", 0, 0, 3, 4);
 		this.mChuyTextureAtlas.load();
 		
-		this.mBoxTextureAtlas = new BitmapTextureAtlas(Global.texture_manager, 171, 171, TextureOptions.DEFAULT);
-		this.mBoxTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(mBoxTextureAtlas, Global.main_activity, "box.png", 0, 0, 1, 1);
+		this.mBoxTextureAtlas = new BitmapTextureAtlas(Global.texture_manager, 100, 70, TextureOptions.DEFAULT);
+		this.mBoxTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(mBoxTextureAtlas, Global.main_activity, "book.png", 0, 0, 2, 1);
 		this.mBoxTextureAtlas.load();
 		
-		this.mPointTextureAtlas = new BitmapTextureAtlas(Global.texture_manager, 30, 30, TextureOptions.DEFAULT);
-		this.mPointTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(mPointTextureAtlas, Global.main_activity, "point.png", 0, 0, 1, 1);
+		this.mPointTextureAtlas = new BitmapTextureAtlas(Global.texture_manager, 66, 100, TextureOptions.DEFAULT);
+		this.mPointTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(mPointTextureAtlas, Global.main_activity, "bookshelf.png", 0, 0, 1, 1);
 		this.mPointTextureAtlas.load();
 		
 		BitmapTextureAtlas mCompletedTextureAtlas = new BitmapTextureAtlas(Global.texture_manager, 720, 480, TextureOptions.BILINEAR);
 		mCompletedTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mCompletedTextureAtlas, Global.main_activity, "level_completed.png", 0, 0);
 		mCompletedTextureAtlas.load();
+		
+		BitmapTextureAtlas mDestinationTextureAtlas = new BitmapTextureAtlas(Global.texture_manager, 44, 60, TextureOptions.BILINEAR);
+		TextureRegion mDestinationTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mDestinationTextureAtlas, Global.main_activity, "destination.png", 0, 0);
+		mDestinationTextureAtlas.load();
+		this.destination = new Sprite(0, 0, mDestinationTextureRegion, Global.vertex_buffer_object_manager);
 	}
 	
 	public void loadMap(String tmx_path)
@@ -152,14 +167,14 @@ public class MapScene extends Scene implements IOnSceneTouchListener,IOnAreaTouc
 				        final FixtureDef boxFixtureDef = PhysicsFactory.createFixtureDef(0, 0, 1f);
 				        PhysicsFactory.createBoxBody(mPhysicsWorld, rect, BodyType.StaticBody, boxFixtureDef);
 				        rect.setVisible(false);
-				        attachChild(rect);
+				        getChildByIndex(0).attachChild(rect);
 					}
 					
 					if(pTMXTileProperties.containsTMXProperty("type", "circle")) {
 				        final FixtureDef boxFixtureDef = PhysicsFactory.createFixtureDef(0, 0, 1f);
 				        PhysicsFactory.createCircleBody(mPhysicsWorld, rect, BodyType.StaticBody, boxFixtureDef);
 				        rect.setVisible(false);
-				        attachChild(rect);
+				        getChildByIndex(0).attachChild(rect);
 					}
 					
 					if(pTMXTileProperties.containsTMXProperty("type", "triangle a"))
@@ -181,7 +196,7 @@ public class MapScene extends Scene implements IOnSceneTouchListener,IOnAreaTouc
 				        final FixtureDef boxFixtureDef = PhysicsFactory.createFixtureDef(0, 0, 1f);
 				        PhysicsFactory.createPolygonBody(mPhysicsWorld, rect,vertices, BodyType.StaticBody, boxFixtureDef);
 				        rect.setVisible(false);
-				        attachChild(rect);
+				        getChildByIndex(0).attachChild(rect);
 					}
 					
 					if(pTMXTileProperties.containsTMXProperty("type", "triangle b"))
@@ -203,7 +218,7 @@ public class MapScene extends Scene implements IOnSceneTouchListener,IOnAreaTouc
 				        final FixtureDef boxFixtureDef = PhysicsFactory.createFixtureDef(0, 0, 1f);
 				        PhysicsFactory.createPolygonBody(mPhysicsWorld, rect,vertices, BodyType.StaticBody, boxFixtureDef);
 				        rect.setVisible(false);
-				        attachChild(rect);
+				        getChildByIndex(0).attachChild(rect);
 					}
 					
 					if(pTMXTileProperties.containsTMXProperty("type", "triangle c"))
@@ -225,7 +240,7 @@ public class MapScene extends Scene implements IOnSceneTouchListener,IOnAreaTouc
 				        final FixtureDef boxFixtureDef = PhysicsFactory.createFixtureDef(0, 0, 1f);
 				        PhysicsFactory.createPolygonBody(mPhysicsWorld, rect,vertices, BodyType.StaticBody, boxFixtureDef);
 				        rect.setVisible(false);
-				        attachChild(rect);
+				        getChildByIndex(0).attachChild(rect);
 					}
 
 					if(pTMXTileProperties.containsTMXProperty("type", "triangle d"))
@@ -247,7 +262,7 @@ public class MapScene extends Scene implements IOnSceneTouchListener,IOnAreaTouc
 				        final FixtureDef boxFixtureDef = PhysicsFactory.createFixtureDef(0, 0, 1f);
 				        PhysicsFactory.createPolygonBody(mPhysicsWorld, rect,vertices, BodyType.StaticBody, boxFixtureDef);
 				        rect.setVisible(false);
-				        attachChild(rect);
+				        getChildByIndex(0).attachChild(rect);
 					}
 				}
 			});
@@ -270,7 +285,7 @@ public class MapScene extends Scene implements IOnSceneTouchListener,IOnAreaTouc
 			}
 		}
 		
-		attachChild(tmxLayer);
+		getChildByIndex(0).attachChild(tmxLayer);
 
 		/* Load objects in the map. */
 		
@@ -296,6 +311,9 @@ public class MapScene extends Scene implements IOnSceneTouchListener,IOnAreaTouc
 			}
 		}
 		
+		this.destination.setVisible(false);
+		getChildByIndex(3).attachChild(destination);
+		
 		this.level_completed = new Sprite(tmxLayer.getWidth()/2-mCompletedTextureRegion.getWidth()/2, tmxLayer.getHeight()/2-mCompletedTextureRegion.getHeight()/2, mCompletedTextureRegion, Global.vertex_buffer_object_manager)
 		{
 			@Override
@@ -305,7 +323,7 @@ public class MapScene extends Scene implements IOnSceneTouchListener,IOnAreaTouc
 				// TODO Auto-generated method stub
 				if(this.isVisible())
 				{
-					if(level_id+1<=15)
+					if(level_id<Global.AREAS_QUANTITY)
 					{
 						Global.engine.setScene(new MapScene(level_id+1));
 					}else
@@ -319,7 +337,7 @@ public class MapScene extends Scene implements IOnSceneTouchListener,IOnAreaTouc
 		};
 		level_completed.setVisible(false);
 		registerTouchArea(level_completed);
-		attachChild(level_completed);
+		getChildByIndex(4).attachChild(level_completed);
 	}
 	
 	public void registerUpdateHandler()
@@ -337,6 +355,8 @@ public class MapScene extends Scene implements IOnSceneTouchListener,IOnAreaTouc
 	    			editor.putBoolean("level "+level_id+" completed", true);
 	    			editor.commit();
 	    			
+	    			level_completed.setX(chuy.getX()-level_completed.getWidth()/2);
+	    			level_completed.setY(chuy.getY()-level_completed.getHeight()/2);
 	    			level_completed.setVisible(true);
 				}
 			}
@@ -373,43 +393,66 @@ public class MapScene extends Scene implements IOnSceneTouchListener,IOnAreaTouc
 	public void onTouch(TouchEvent pSceneTouchEvent)
 	{
 		chuy.move(pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
+		if(level_completed.isVisible())
+		{
+			level_completed.setX(chuy.getX()-level_completed.getWidth()/2);
+			level_completed.setY(chuy.getY()-level_completed.getHeight()/2);
+		}
 	}
 	
 	public void addChuy(int pos_x,int pos_y)
 	{
-		Chuy chuy = new Chuy(pos_x,pos_y, this.mChuyTextureRegion,mPhysicsWorld);
-		attachChild(chuy);
+		Chuy chuy = new Chuy(pos_x,pos_y, this.mChuyTextureRegion,mPhysicsWorld,destination);
+		getChildByIndex(3).attachChild(chuy);
 		this.chuy=chuy;
 	}
 	
 	public void addBox(int pos_x,int pos_y)
 	{
-		final Box box = new Box(pos_x,pos_y, this.mBoxTextureRegion,mPhysicsWorld);
-		attachChild(box);
+		final Box box = new Box(pos_x,pos_y,this.mBoxTextureRegion,mPhysicsWorld);
+		getChildByIndex(2).attachChild(box);
 		boxes.add(box);
 	}
 	
 	public void addPoint(int pos_x,int pos_y)
 	{
 		final Point point = new Point(pos_x,pos_y, this.mPointTextureRegion);
-		attachChild(point);
+		getChildByIndex(1).attachChild(point);
 		points.add(point);
 	}
 	
 	public boolean isGameOver()
 	{
+		boolean game_over=true;
+		
+		ArrayList<Box>boxes_temp=new ArrayList<Box>();
+		for(int i=0;i<boxes.size();i++)
+		{
+			boxes_temp.add(boxes.get(i));
+		}
+		
 		for(int i=0;i<points.size();i++)
 		{
-			boolean colides=false;
-			for(int j=0;j<boxes.size();j++)
+			boolean collides=false;
+			for(int j=0;j<boxes_temp.size();j++)
 			{
-				if(points.get(i).collidesWith(boxes.get(j)))
-					colides=true;
+				if(points.get(i).collidesWith(boxes_temp.get(j)))
+				{
+					boxes_temp.get(j).setReady();
+					collides=true;
+					boxes_temp.remove(j);
+					break;
+				}else
+				{
+					boxes_temp.get(j).setNotReady();
+				}
 			}
-			if(!colides)
-				return false;
+			if(!collides)
+			{
+				game_over=false;
+			}
 		}
-		return true;
+		return game_over;
 	}
 
 	@Override

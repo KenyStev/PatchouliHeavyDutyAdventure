@@ -1,6 +1,7 @@
 package rosalila.studio.sokochuy;
 
 import org.andengine.entity.sprite.AnimatedSprite;
+import org.andengine.entity.sprite.Sprite;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
@@ -14,8 +15,9 @@ public class Chuy extends AnimatedSprite {
 	float velocity;
 	public Body body;
 	float destination_x,destination_y;
+	Sprite destination;
 	
-	public Chuy(float pX, float pY, ITiledTextureRegion pTiledTextureRegion,PhysicsWorld mPhysicsWorld) {
+	public Chuy(float pX, float pY, ITiledTextureRegion pTiledTextureRegion,PhysicsWorld mPhysicsWorld,final Sprite destination) {
 		super(pX, pY, pTiledTextureRegion, Global.vertex_buffer_object_manager);
 		
         //Smaller chuys
@@ -23,7 +25,7 @@ public class Chuy extends AnimatedSprite {
         this.setWidth(this.getWidth()*(float)0.7);
 		
 		final FixtureDef playerFixtureDef = PhysicsFactory.createFixtureDef(0, 0, 0.5f);
-		this.body = PhysicsFactory.createBoxBody(mPhysicsWorld, this, BodyType.DynamicBody, playerFixtureDef);
+		this.body = PhysicsFactory.createCircleBody(mPhysicsWorld, this, BodyType.DynamicBody, playerFixtureDef);
         mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(this, body, true, false){
                 @Override
                 public void onUpdate(float pSecondsElapsed){
@@ -31,6 +33,8 @@ public class Chuy extends AnimatedSprite {
                         
                 		if(destination_x!=-1 && destination_y!=-1)
                 		{
+                			destination.setX(destination_x);
+                			destination.setY(destination_y);
                 			float distance_x=destination_x-getX();
                 			float distance_y=destination_y-getY();
                 			float total_distance=(float)Math.sqrt(Math.pow(distance_x, 2)+(float)Math.pow(distance_y, 2));
@@ -40,15 +44,17 @@ public class Chuy extends AnimatedSprite {
                 			
                 			body.setLinearVelocity(distance_x*velocity/total_distance,distance_y*velocity/total_distance);
                 			Global.mZoomCamera.setCenter(getX(),getY());
+                			destination.setVisible(true);
                 		}else
                 		{
+                			destination.setVisible(false);
                 			body.setLinearVelocity(0,0);
                 			stopAnimation();
                 		}
                 }
         });
         
-		velocity=(float) 12;
+		velocity=(float) 7;
 		this.destination_x=-1;
 		this.destination_y=-1;
 		
@@ -62,6 +68,10 @@ public class Chuy extends AnimatedSprite {
 		destination_y-=getHeight()/2;
 		this.destination_x=destination_x;
 		this.destination_y=destination_y;
+		if(Math.abs(this.getX()-this.destination_x)>Math.abs(this.getY()-this.destination_y))
+			this.destination_y=this.getY();
+		else
+			this.destination_x=this.getX();
 		this.stopAnimation();
 		
 		float distance_x=Math.abs(getX()-destination_x);

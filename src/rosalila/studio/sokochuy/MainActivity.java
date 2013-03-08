@@ -148,7 +148,7 @@ public class MainActivity extends SimpleBaseGameActivity {
 
 	        @Override
 	        public void run() {
-	            Toast.makeText(Global.main_activity, str, Toast.LENGTH_LONG).show();
+	            Toast.makeText(Global.main_activity, str, Toast.LENGTH_SHORT).show();
 	        }
 	    });
 	}
