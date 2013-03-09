@@ -38,16 +38,16 @@
    <property name="text" value="Area 2"/>
   </properties>
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA2NnYGBgJxKzoWFOJIyuDpc+bOpANAcU49LPgaYGWRybvch60NVxYnE/jI+uDiaH7mdkdcRgDiIxAE0o0NSQAQAA
+   H4sIAAAAAAAAA2NnYGBgJxKz4cHo6nDpx8bHRSOr40DC6OLYzIepZUPiYzOPjYD52OTR1RGDsenHhgFvwTm7kAEAAA==
   </data>
  </layer>
  <objectgroup name="Objects" width="10" height="10">
-  <object name="Box" x="292" y="460" width="50" height="70"/>
-  <object name="Point" x="193" y="271" width="66" height="90"/>
-  <object name="Chuy" x="451" y="363" width="86" height="86"/>
-  <object name="Box" x="464" y="287" width="50" height="70"/>
-  <object name="Point" x="375" y="175" width="66" height="90"/>
-  <object name="Box" x="387" y="288" width="50" height="70"/>
-  <object name="Point" x="192" y="176" width="66" height="90"/>
+  <object name="Box" x="467" y="364" width="50" height="70"/>
+  <object name="Point" x="375" y="179" width="66" height="90"/>
+  <object name="Chuy" x="452" y="182" width="86" height="86"/>
+  <object name="Point" x="375" y="274" width="66" height="90"/>
+  <object name="Box" x="286" y="458" width="50" height="70"/>
+  <object name="Box" x="378" y="458" width="50" height="70"/>
+  <object name="Point" x="192" y="450" width="66" height="90"/>
  </objectgroup>
 </map>
