@@ -3,6 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <com.iozm.rwei160144.AdView
+	xmlns:ap="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/myAdView"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	ap:animation="fade"
+	ap:banner_type="inappad"
+	ap:placementType="interstitial"
+	ap:test_mode="false"
+	ap:refresh_time="60"
+	ap:canShowMR="false"
+	/>
+    
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

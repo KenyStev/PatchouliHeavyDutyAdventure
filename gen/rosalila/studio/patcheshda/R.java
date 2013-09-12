@@ -9,6 +9,54 @@ package rosalila.studio.patcheshda;
 
 public final class R {
     public static final class attr {
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int animation=0x7f010003;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int banner_type=0x7f010002;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int canShowMR=0x7f010005;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int placementType=0x7f010004;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int refresh_time=0x7f010000;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int test_mode=0x7f010001;
     }
     public static final class dimen {
         public static final int padding_large=0x7f040002;
@@ -20,10 +68,20 @@ public final class R {
         public static final int ic_launcher=0x7f020001;
     }
     public static final class id {
-        public static final int menu_settings=0x7f080000;
+        public static final int btnAction=0x7f080008;
+        public static final int imageView=0x7f080002;
+        public static final int imageView1=0x7f080004;
+        public static final int imgb=0x7f080007;
+        public static final int menu_settings=0x7f080009;
+        public static final int myAdView=0x7f080000;
+        public static final int textView=0x7f080001;
+        public static final int textView1=0x7f080006;
+        public static final int title=0x7f080005;
+        public static final int tlayout=0x7f080003;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
+        public static final int airpush_notify=0x7f030001;
     }
     public static final class menu {
         public static final int activity_main=0x7f070000;
@@ -37,4 +95,114 @@ public final class R {
     public static final class style {
         public static final int AppTheme=0x7f060000;
     }
+    public static final class styleable {
+        /** Attributes that can be used with a AdView.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #AdView_animation rosalila.studio.patcheshda:animation}</code></td><td></td></tr>
+           <tr><td><code>{@link #AdView_banner_type rosalila.studio.patcheshda:banner_type}</code></td><td></td></tr>
+           <tr><td><code>{@link #AdView_canShowMR rosalila.studio.patcheshda:canShowMR}</code></td><td></td></tr>
+           <tr><td><code>{@link #AdView_placementType rosalila.studio.patcheshda:placementType}</code></td><td></td></tr>
+           <tr><td><code>{@link #AdView_refresh_time rosalila.studio.patcheshda:refresh_time}</code></td><td></td></tr>
+           <tr><td><code>{@link #AdView_test_mode rosalila.studio.patcheshda:test_mode}</code></td><td></td></tr>
+           </table>
+           @see #AdView_animation
+           @see #AdView_banner_type
+           @see #AdView_canShowMR
+           @see #AdView_placementType
+           @see #AdView_refresh_time
+           @see #AdView_test_mode
+         */
+        public static final int[] AdView = {
+            0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003,
+            0x7f010004, 0x7f010005
+        };
+        /**
+          <p>This symbol is the offset where the {@link rosalila.studio.patcheshda.R.attr#animation}
+          attribute's value can be found in the {@link #AdView} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:animation
+        */
+        public static final int AdView_animation = 3;
+        /**
+          <p>This symbol is the offset where the {@link rosalila.studio.patcheshda.R.attr#banner_type}
+          attribute's value can be found in the {@link #AdView} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:banner_type
+        */
+        public static final int AdView_banner_type = 2;
+        /**
+          <p>This symbol is the offset where the {@link rosalila.studio.patcheshda.R.attr#canShowMR}
+          attribute's value can be found in the {@link #AdView} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:canShowMR
+        */
+        public static final int AdView_canShowMR = 5;
+        /**
+          <p>This symbol is the offset where the {@link rosalila.studio.patcheshda.R.attr#placementType}
+          attribute's value can be found in the {@link #AdView} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:placementType
+        */
+        public static final int AdView_placementType = 4;
+        /**
+          <p>This symbol is the offset where the {@link rosalila.studio.patcheshda.R.attr#refresh_time}
+          attribute's value can be found in the {@link #AdView} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:refresh_time
+        */
+        public static final int AdView_refresh_time = 0;
+        /**
+          <p>This symbol is the offset where the {@link rosalila.studio.patcheshda.R.attr#test_mode}
+          attribute's value can be found in the {@link #AdView} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:test_mode
+        */
+        public static final int AdView_test_mode = 1;
+    };
 }

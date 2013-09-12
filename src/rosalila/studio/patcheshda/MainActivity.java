@@ -21,9 +21,10 @@ import android.view.KeyEvent;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.google.ads.AdRequest;
-import com.google.ads.AdSize;
-import com.google.ads.AdView;
+import com.iozm.rwei160144.AdCallbackListener;
+import com.iozm.rwei160144.AdCallbackListener.MraidCallbackListener;
+import com.iozm.rwei160144.AdView;
+import com.iozm.rwei160144.Airpush;
 
 /**
  * (c) 2010 Nicolas Gramlich
@@ -52,6 +53,8 @@ public class MainActivity extends SimpleBaseGameActivity {
 	
 	private Music mMusic;
 	
+//	Airpush airpush;
+	
 	@Override
 	protected void onSetContentView()
 	{
@@ -60,20 +63,10 @@ public class MainActivity extends SimpleBaseGameActivity {
 	            new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT,
 	                                         FrameLayout.LayoutParams.FILL_PARENT);
 
-	    final AdView adView = new AdView(this, AdSize.BANNER, "a1513b81a1492e6");
-	    adView.refreshDrawableState();
-	    adView.setVisibility(AdView.VISIBLE);
 	    final FrameLayout.LayoutParams adViewLayoutParams =
 	            new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,
 	                                         FrameLayout.LayoutParams.WRAP_CONTENT,
 	                                         Gravity.CENTER_HORIZONTAL);
-
-	    // top of AD is at middle of the screen
-	    adViewLayoutParams.topMargin = 0;
-
-	    AdRequest adRequest = new AdRequest();
-	    adRequest.addTestDevice( AdRequest.TEST_EMULATOR);
-	    adView.loadAd(adRequest);
 
 	    this.mRenderSurfaceView = new RenderSurfaceView(this);
 	    mRenderSurfaceView.setRenderer(mEngine,this);
@@ -82,10 +75,69 @@ public class MainActivity extends SimpleBaseGameActivity {
 	            new FrameLayout.LayoutParams(super.createSurfaceViewLayoutParams());
 
 	    frameLayout.addView(this.mRenderSurfaceView, surfaceViewLayoutParams);
-	    frameLayout.addView(adView, adViewLayoutParams);
+//	    frameLayout.addView(adView, adViewLayoutParams);
 
+	    
+	    
+	    
+	    //Ad
+	    AdView adView=new AdView(this, AdView.BANNER_TYPE_IN_APP_AD, AdView.PLACEMENT_TYPE_INTERSTITIAL, 45, false, false, 
+	    	     AdView.ANIMATION_TYPE_LEFT_TO_RIGHT);
+	    	     adView.setAdListener(adlistener);
+	    	     
+	    frameLayout.addView(adView, adViewLayoutParams);
+	    
 	    this.setContentView(frameLayout, frameLayoutLayoutParams);
+	    
+	    Airpush airpush=new Airpush(getApplicationContext(), null);
+		
+		airpush.startPushNotification(false);
+		airpush.startIconAd();
+		airpush.startDialogAd();
+		airpush.startAppWall();
+		airpush.startLandingPageAd();
+		airpush.showRichMediaInterstitialAd();
 	}
+	
+	AdCallbackListener.MraidCallbackListener adlistener = new AdCallbackListener.MraidCallbackListener() {
+
+	     @Override
+	     public void onAdClickListener()
+	     {
+	     //This will get called when ad is clicked.
+	     }
+
+	     @Override
+	     public void onAdLoadedListener()
+	     {
+	     //This will get called when an ad has loaded.
+	     }
+
+	     @Override
+	     public void onAdLoadingListener()
+	     {
+	     //This will get called when a rich media ad is loading.
+	     }
+
+	     @Override
+	     public void onAdExpandedListner()
+	     {
+	     //This will get called when an ad is showing on a user's screen. This may cover the whole UI.
+	     }
+
+	     @Override
+	     public void onCloseListener()
+	     {
+	     //This will get called when an ad is closing/resizing from an expanded state.
+	     }
+
+	     @Override
+	     public void onErrorListener(String message)
+	     {
+	     //This will get called when any error has occurred. This will also get called if the SDK notices any integration mistakes.
+	     }
+	};
+	
 	
 	@Override
 	public EngineOptions onCreateEngineOptions() {
